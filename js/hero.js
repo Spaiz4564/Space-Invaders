@@ -1,6 +1,6 @@
 'use strict'
 
-const LASER_SPEED = 80
+const LASER_SPEED = 30
 var gShootInterval
 var gHero
 
@@ -25,6 +25,7 @@ function onKeyDown(ev) {
 }
 // Move the hero right (1) or left (-1)
 function moveHero(dir) {
+  if (!gGame.isOn) return
   var currentPos = { i: gHero.pos.i, j: gHero.pos.j }
   var nextPos = { i: gHero.pos.i, j: (gHero.pos.j += dir) }
   updateCell(currentPos)
@@ -48,14 +49,17 @@ function blinkLaser(pos) {
     return
   }
 
-  updateCell({ i: nextCell, j: pos.j }, LASER)
+  if (gBoard[nextCell][pos.j].type === ALIEN) {
+    handleAlienHit(pos, nextCell)
+    updateCell({ i: nextCell, j: pos.j })
+  } else {
+    updateCell({ i: nextCell, j: pos.j }, LASER)
+  }
+
   if (prevCell === gHero.pos.i) return
   updateCell({ i: prevCell, j: pos.j })
 
   ///////////
-  if (gBoard[nextCell][pos.j].type === ALIEN) {
-    handleAlienHit(pos, nextCell)
-  }
 }
 
 function handleOutOfRange(pos, prevCell) {
