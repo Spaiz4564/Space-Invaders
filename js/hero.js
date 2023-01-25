@@ -1,6 +1,6 @@
 'use strict'
 
-const LASER_SPEED = 30
+const LASER_SPEED = 60
 var gShootInterval
 var gHero
 
