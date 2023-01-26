@@ -70,6 +70,7 @@ function blinkLaser(pos) {
       console.log('LAZER BOMB')
       bombNegs(gBoard, nextCell, pos.j)
       handleAlienHit(pos, nextCell)
+      updateCell({ i: nextCell, j: pos.j })
     } else {
       handleAlienHit(pos, nextCell)
       updateCell({ i: nextCell, j: pos.j })

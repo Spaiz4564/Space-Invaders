@@ -107,25 +107,25 @@ function freezeIntervals() {
 }
 
 // Check victory
-function checkVictory() {
+function checkVictory(board) {
   if (!gGame.aliensCount) {
     handleGameOver(true)
-    showModal('')
+    console.log('hello')
+    showModal('victory')
   }
 
   // Game is buggy, this function makes sure winning isnt bugged, it runs through the board
   // making sure there are no invaders, it only runs if the first check was not enough.
-  if (gGame.aliensCount < 7) {
-    for (let i = 0; i < gBoard.length; i++) {
-      for (let j = 0; j < gBoard.length; j++) {
-        if (gBoard[i][j].gameObject === ALIEN) {
-          return true
-        }
+
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board.length; j++) {
+      if (board[i][j].gameObject === ALIEN || gBoard[i][j].type === ALIEN) {
+        return true
       }
     }
-    return false
   }
-  return true
+
+  return false
 }
 
 // Handle game over result

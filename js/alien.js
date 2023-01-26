@@ -1,6 +1,6 @@
 'use strict'
 
-const ALIEN_SPEED = 500
+const ALIEN_SPEED = 800
 var gIntervalAliensRight
 var gIntervalAliensDown
 var gIntervalAliensLeft
@@ -23,15 +23,15 @@ function createAliens(board) {
 function handleAlienHit(pos, nextCell) {
   updateScore(10)
   gGame.aliensCount--
-  var results = checkVictory()
-  if (!results) {
-    handleGameOver(true)
-  }
   gHero.isShoot = false
   gSpecialLasers.sonicLazer = false
   gBoard[nextCell][pos.j].type = null
   updateCell({ i: nextCell, j: pos.j })
   clearInterval(gShootInterval)
+  var results = checkVictory(gBoard)
+  if (!results) {
+    handleGameOver(true)
+  }
 }
 
 // Shift board right
