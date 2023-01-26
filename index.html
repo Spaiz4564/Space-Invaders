@@ -5,14 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/game.css" />
+    <link rel="stylesheet" href="styles/modal.css" />
     <title>Space Invaders</title>
   </head>
-  <body onload="init()" onkeyup="onKeyDown(event)">
-    <h1>Space Invaders</h1>
+  <body onload="showModal('intro')" onkeyup="onKeyDown(event)">
+    <img class="game-title" src="imgs/title.png" alt="" />
     <h2>SCORE: <span></span></h2>
-    <canvas id="game"> </canvas>
+    <div class="bomb-info">
+      <h3 class="bomb-count">
+        <img src="imgs/rocket.png" alt="" /><span class="rocket"></span>
+        <img class="blue-laser-img" src="imgs/blueLaser.png" alt="" /><span
+          class="blue-laser-span"
+        ></span>
+      </h3>
+    </div>
+    <canvas></canvas>
+    <div class="modal"></div>
     <div class="board-container"></div>
-    <button onclick="init()" class="restart">Restart Game</button>
     <script src="js/util.js"></script>
     <script src="js/game.js"></script>
     <script src="js/hero.js"></script>

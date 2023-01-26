@@ -5,10 +5,16 @@ body {
   padding: 0px;
   margin: 0px;
   height: 100vh;
-  background: linear-gradient(0deg, rgb(97, 98, 99) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(0deg, rgb(97, 98, 99) 0%, rgb(0 0 0 / 72%) 100%);
+}
+
+h2 {
+  font-family: fantasy;
+  letter-spacing: 1px;
 }
 
 canvas {
+  opacity: 0.8;
   position: relative;
   box-shadow: black 20px 10px 50px;
   width: 600px;
@@ -17,37 +23,33 @@ canvas {
   background-size: 400px;
 }
 
+.blue-laser-img {
+  margin-left: 15px;
+}
+
+.game-title {
+  margin-top: 25px;
+  height: 150px;
+  width: 350px;
+}
+
 h1 {
-  margin: 0px;
+  margin-top: 2rem;
+  /* margin: 0px; */
   margin-bottom: 10px;
   font-size: 2.9em;
   font-family: helvetica;
 }
 
-h2 {
-  font-family: helvetica;
-}
-
 .board-container {
-  bottom: 11rem;
+  bottom: 3.5rem;
   position: absolute;
 }
 
-.restart {
-  display: none;
-  transition: all 0.3s;
-  font-size: 0.9rem;
-  width: 8rem;
-  font-family: fantasy;
-  background-color: #63dd17cd;
-  cursor: pointer;
-  border-radius: 5px;
-  padding: 10px;
-  margin-top: 25px;
-}
-
-.restart:hover {
-  background-color: #64dd17;
+.bomb-count {
+  top: 11.2rem;
+  left: 43rem;
+  position: absolute;
 }
 
 .hero,
@@ -57,13 +59,11 @@ h2 {
 }
 
 .laser {
-  color: red;
   width: 25px;
   height: 35px;
 }
 
 .cell {
-  color: white;
   width: 32px;
   height: 40px;
 }

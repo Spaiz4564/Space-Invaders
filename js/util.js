@@ -5,10 +5,16 @@ function getElCell(pos) {
 }
 
 // Returns a new cell object. e.g.: {type: SKY, gameObject: ALIEN}
-function createCell(gameObject = null, type = SKY, isAlien = false) {
+function createCell(
+  gameObject = null,
+  type = null,
+  isAlien = false,
+  location = null
+) {
   return {
     type: type,
     gameObject: gameObject,
     isAlien,
+    location: location,
   }
 }

@@ -1,8 +1,9 @@
 'use strict'
 
-const LASER_SPEED = 60
+var laserSpeed = 80
 var gShootInterval
 var gHero
+var gSpecialLasers
 
 // creates the hero and place it on board
 function createHero(board) {
@@ -12,6 +13,9 @@ function createHero(board) {
 }
 // Handle game keys
 function onKeyDown(ev) {
+  if (ev.code === 'Enter' && !gGame.isOn) init()
+  if (!gGame.isOn) return
+
   if (ev.code === 'ArrowLeft') {
     if (gHero.pos.j === 0) return
     moveHero(-1)
@@ -20,12 +24,21 @@ function onKeyDown(ev) {
     moveHero(1)
   } else if (ev.code === 'Space') {
     shoot()
-    console.log('SHOOT ')
+  } else if (ev.code === 'KeyN' && gSpecialLasers.laserBombCount === 1) {
+    gSpecialLasers.laserBomb = true
+    gSpecialLasers.laserBombCount--
+    updatesLaserCount()
+    shoot()
+  } else if (ev.code === 'KeyX' && gSpecialLasers.sonicLazerCount > 0) {
+    console.log('X')
+    gSpecialLasers.sonicLazer = true
+    gSpecialLasers.sonicLazerCount--
+    updatesLaserCount()
+    shoot()
   }
 }
 // Move the hero right (1) or left (-1)
 function moveHero(dir) {
-  if (!gGame.isOn) return
   var currentPos = { i: gHero.pos.i, j: gHero.pos.j }
   var nextPos = { i: gHero.pos.i, j: (gHero.pos.j += dir) }
   updateCell(currentPos)
@@ -35,9 +48,12 @@ function moveHero(dir) {
 function shoot() {
   var position = { ...gHero.pos }
   if (gHero.isShoot) return
-  gShootInterval = setInterval(() => {
-    blinkLaser(position)
-  }, LASER_SPEED)
+  gShootInterval = setInterval(
+    () => {
+      blinkLaser(position)
+    },
+    gSpecialLasers.sonicLazer ? 30 : laserSpeed
+  )
 }
 // renders a LASER at specific cell for short time and removes it
 function blinkLaser(pos) {
@@ -50,10 +66,16 @@ function blinkLaser(pos) {
   }
 
   if (gBoard[nextCell][pos.j].type === ALIEN) {
-    handleAlienHit(pos, nextCell)
-    updateCell({ i: nextCell, j: pos.j })
+    if (gSpecialLasers.laserBomb) {
+      console.log('LAZER BOMB')
+      bombNegs(gBoard, nextCell, pos.j)
+      handleAlienHit(pos, nextCell)
+    } else {
+      handleAlienHit(pos, nextCell)
+      updateCell({ i: nextCell, j: pos.j })
+    }
   } else {
-    updateCell({ i: nextCell, j: pos.j }, LASER)
+    updateCell({ i: nextCell, j: pos.j }, handleLaserColor())
   }
 
   if (prevCell === gHero.pos.i) return
@@ -62,9 +84,42 @@ function blinkLaser(pos) {
   ///////////
 }
 
+// Handle shot out of range
 function handleOutOfRange(pos, prevCell) {
-  console.log('OUT OF RANGE')
   clearInterval(gShootInterval)
   updateCell({ i: prevCell, j: pos.j })
   gHero.isShoot = false
+}
+
+// Bomb negs
+function bombNegs(board, rowIdx, colIdx) {
+  for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+    if (i < 0 || i >= board.length) continue
+
+    for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+      if (j < 0 || j >= board[i].length) continue
+      if (i === rowIdx && j === colIdx) continue
+
+      var currCell = board[i][j]
+      if (currCell.type === ALIEN) {
+        updateCell({ i, j })
+        gGame.aliensCount--
+        updateScore(10)
+      }
+    }
+  }
+  gSpecialLasers.laserBomb = false
+}
+
+// Handling laser color
+function handleLaserColor() {
+  let laserCondition
+  if (gSpecialLasers.sonicLazer) {
+    laserCondition = SONIC_LASER
+  } else if (gSpecialLasers.laserBomb) {
+    laserCondition = LASER_BOMB
+  } else {
+    laserCondition = LASER
+  }
+  return laserCondition
 }

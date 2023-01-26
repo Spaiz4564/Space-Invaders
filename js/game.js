@@ -1,16 +1,19 @@
 'use strict'
 
 const BOARD_SIZE = 14
-const ALIENS_ROW_COUNT = 3
-
 const HERO = `<img class="hero" src="imgs/player.png"></img>`
 const ALIEN = `<img class="alien" src="imgs/enemy2.png"></img>`
 const LASER = `<img class="laser" src="imgs/laser.png"></img>`
-const SKY = ''
-
-var gAliensRowLength = 8
+const SONIC_LASER = `<img class="laser" src="imgs/sonicLazer.png"></img>`
+const LASER_BOMB = `<img class="laser" src="imgs/rocket.png"></img>`
+var ALIENS_ROW_LENGTH = 8
+const ALIENS_ROW_COUNT = 3
 var gBoard
-var gGame
+var gGame = {
+  isOn: false,
+  aliensCount: 0,
+  score: 0,
+}
 
 // Called when game loads
 function init() {
@@ -21,6 +24,8 @@ function init() {
   renderBoard(gBoard, '.board-container')
   moveAliens()
 }
+
+var gAliensInterval
 // Create and returns the board with aliens on top, ground at bottom
 // use the functions: createCell, createHero, createAliens
 function createBoard() {
@@ -62,27 +67,99 @@ function updateCell(pos, gameObject = null, type = '', isAlien = false) {
   elCell.innerHTML = gameObject || ''
 }
 
+// Updates score
 function updateScore(diff) {
   gGame.score += diff
   document.querySelector('h2 span').innerText = gGame.score
 }
 
-function checkVictory() {
-  if (!gGame.aliensCount) {
-    console.log('VICTORY')
-    gGame.isOn = false
-    document.querySelector('.restart').style.display = 'inline-block'
+// Resets game
+function resetGame() {
+  document.querySelector('.modal').style.display = 'none'
+  document.querySelector('canvas').style.opacity = '1'
+  document.querySelector('h2 span').innerText = 0
+  gIntervalsCount = 0
+  gGame.aliensCount = 24
+  gAliensTopRowIdx = 0
+  gGame.isOn = true
+  gSpecialLasers = {
+    laserBomb: false,
+    laserBombCount: 1,
+    sonicLazer: false,
+    sonicLazerCount: 3,
   }
+  updatesLaserCount()
+  gAliensBottomRowIdx = ALIENS_ROW_COUNT - 1
 }
 
-function resetGame() {
-  document.querySelector('.restart').style.display = 'none'
-  gAliensTopRowIdx = 0
-  gAliensRowLength = 8
-  gGame = {
-    isOn: true,
-    aliensCount: 0,
-    score: 0,
+function updatesLaserCount() {
+  let bombCount = gSpecialLasers.laserBombCount
+  let laserCount = gSpecialLasers.sonicLazerCount
+  document.querySelector('h3 span').innerText = bombCount
+  document.querySelector('.blue-laser-span').innerText = laserCount
+}
+
+// Freeze intervals
+function freezeIntervals() {
+  clearInterval(gIntervalAliensDown)
+  clearInterval(gIntervalAliensRight)
+  clearInterval(gIntervalAliensLeft)
+}
+
+// Check victory
+function checkVictory() {
+  if (!gGame.aliensCount) {
+    handleGameOver(true)
+    showModal('')
   }
-  document.querySelector('h2 span').innerText = 0
+
+  // Game is buggy, this function makes sure winning isnt bugged, it runs through the board
+  // making sure there are no invaders, it only runs if the first check was not enough.
+  if (gGame.aliensCount < 7) {
+    for (let i = 0; i < gBoard.length; i++) {
+      for (let j = 0; j < gBoard.length; j++) {
+        if (gBoard[i][j].gameObject === ALIEN) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+  return true
+}
+
+// Handle game over result
+function handleGameOver(results) {
+  gGame.isOn = false
+  document.querySelector('.modal').style.display = 'block'
+  document.querySelector('.modal').style.width = '19rem'
+  document.querySelector('.modal').style.height = '19rem'
+  document.querySelector('table').style.position = 'absolute'
+  freezeIntervals()
+  showModal(results ? 'victory' : 'lose')
+}
+
+function showModal(action) {
+  /// it was last minute, didnt have time to clear DRY code @@
+
+  let strHTML = ''
+  if (action === 'intro') {
+    strHTML = `<p class="modal-title">SPACE INVADERS</p>
+<p>
+  DESTROY ALL INVADERS<br />
+  BEFORE THEY REACH YOU
+</p>
+<p>&#x25BA;&nbsp; PRESS N FOR SUPER BOMB</p>
+<p>&#x25BA; &nbsp;PRESS X FOR SONIC LAZER</p>
+<p class="start-info">Press ENTER to start</p>`
+    document.querySelector('.modal').innerHTML = strHTML
+  } else if (action === 'victory') {
+    strHTML = `<h1 class="game-over-h1">VICTORY</h1>
+    <button onclick="init()" class="restart">Restart Game</button>`
+    document.querySelector('.modal').innerHTML = strHTML
+  } else if (action === 'lose') {
+    strHTML = `<h1 class="game-over-h1">GAMEOVER</h1>
+    <button onclick="init()" class="restart">Restart Game</button>`
+    document.querySelector('.modal').innerHTML = strHTML
+  }
 }
