@@ -18,3 +18,8 @@ function createCell(
     location: location,
   }
 }
+
+function playSound(audio) {
+  var audio = new Audio(`sounds/${audio}.wav`)
+  audio.play()
+}

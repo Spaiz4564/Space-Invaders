@@ -21,6 +21,7 @@ function createAliens(board) {
 
 // Handle alien hit
 function handleAlienHit(pos, nextCell) {
+  playSound('enemy-dead')
   updateScore(10)
   gGame.aliensCount--
   gHero.isShoot = false

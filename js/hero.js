@@ -22,7 +22,8 @@ function onKeyDown(ev) {
   } else if (ev.code === 'ArrowRight') {
     if (gHero.pos.j === 13) return
     moveHero(1)
-  } else if (ev.code === 'Space') {
+  } else if (ev.code === 'Space' && !gHero.isShoot) {
+    playSound('shoot')
     shoot()
   } else if (ev.code === 'KeyN' && gSpecialLasers.laserBombCount === 1) {
     gSpecialLasers.laserBomb = true
