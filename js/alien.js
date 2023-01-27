@@ -6,7 +6,7 @@ var gIntervalAliensDown
 var gIntervalAliensLeft
 var gAliensTopRowIdx
 var gAliensBottomRowIdx
-var gIsAlienFreeze = true
+var gIsAlienFreeze
 var gIntervalsCount
 
 // Creates aliens
@@ -38,11 +38,8 @@ function handleAlienHit(pos, nextCell) {
 // Shift board right
 function shiftBoardRight() {
   if (gIntervalsCount === 5) {
-    clearInterval(gIntervalAliensRight)
-    gIntervalAliensRight = null
-    gIntervalAliensDown = setInterval(() => {
-      shiftBoardDown(gBoard)
-    }, ALIEN_SPEED)
+    freezeIntervals()
+    gIntervalAliensDown = setInterval(shiftBoardDown, ALIEN_SPEED, gBoard)
   }
   for (var i = gAliensTopRowIdx; i <= gAliensBottomRowIdx; i++) {
     for (var j = gBoard[0].length - 1; j >= 0; j--) {
@@ -58,11 +55,8 @@ function shiftBoardRight() {
 // Shift board left
 function shiftBoardLeft() {
   if (gIntervalsCount === 12) {
-    clearInterval(gIntervalAliensLeft)
-    gIntervalAliensLeft = null
-    gIntervalAliensDown = setInterval(() => {
-      shiftBoardDown(gBoard)
-    }, ALIEN_SPEED)
+    freezeIntervals()
+    gIntervalAliensDown = setInterval(shiftBoardDown, ALIEN_SPEED, gBoard)
   }
   for (var i = gAliensTopRowIdx; i <= gAliensBottomRowIdx; i++) {
     for (var j = 0; j < gBoard[0].length; j++) {
@@ -78,18 +72,12 @@ function shiftBoardLeft() {
 // Shift board down
 function shiftBoardDown() {
   if (gIntervalsCount === 6) {
-    clearInterval(gIntervalAliensDown)
-    gIntervalAliensDown = null
-    gIntervalAliensLeft = setInterval(() => {
-      shiftBoardLeft(gBoard)
-    }, ALIEN_SPEED)
+    freezeIntervals()
+    gIntervalAliensLeft = setInterval(shiftBoardLeft, ALIEN_SPEED, gBoard)
   } else if (gIntervalsCount === 13) {
-    clearInterval(gIntervalAliensDown)
-    gIntervalAliensDown = null
+    freezeIntervals()
     gIntervalsCount = -1
-    gIntervalAliensRight = setInterval(() => {
-      shiftBoardRight(gBoard)
-    }, ALIEN_SPEED)
+    gIntervalAliensRight = setInterval(shiftBoardRight, ALIEN_SPEED, gBoard)
   }
   for (var i = gAliensBottomRowIdx; i >= gAliensTopRowIdx; i--) {
     for (var j = 0; j < gBoard[0].length; j++) {
@@ -97,7 +85,7 @@ function shiftBoardDown() {
         updateCell({ i, j }, '')
         updateCell({ i: i + 1, j }, ALIEN, ALIEN, true)
       }
-      if (i === 11) handleGameOver(false)
+      if (i === gBoard.length - 3) handleGameOver(false)
     }
   }
   gIntervalsCount++
@@ -109,7 +97,11 @@ function shiftBoardDown() {
 // it re-renders the board every time
 // when the aliens are reaching the hero row - interval stops
 function moveAliens() {
-  gIntervalAliensRight = setInterval(() => {
-    shiftBoardRight(gBoard)
-  }, ALIEN_SPEED)
+  gIntervalAliensRight = setInterval(shiftBoardRight, ALIEN_SPEED, gBoard)
+}
+
+function checkIfDead(gBoard) {
+  for (let i = 0; i < gBoard.length; i++) {
+    for (let j = 0; j < gBoard[i].length; j++) {}
+  }
 }

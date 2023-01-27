@@ -92,6 +92,7 @@ function resetGame() {
   gAliensBottomRowIdx = ALIENS_ROW_COUNT - 1
 }
 
+// Updates laser count
 function updatesLaserCount() {
   let bombCount = gSpecialLasers.laserBombCount
   let laserCount = gSpecialLasers.sonicLazerCount
@@ -139,27 +140,12 @@ function handleGameOver(results) {
   showModal(results ? 'victory' : 'lose')
 }
 
+// Show modal
 function showModal(action) {
-  /// it was last minute, didnt have time to clear DRY code @@
-
-  let strHTML = ''
-  if (action === 'intro') {
-    strHTML = `<p class="modal-title">SPACE INVADERS</p>
-<p>
-  DESTROY ALL INVADERS<br />
-  BEFORE THEY REACH YOU
-</p>
-<p>&#x25BA;&nbsp; PRESS N FOR SUPER BOMB</p>
-<p>&#x25BA; &nbsp;PRESS X FOR SONIC LAZER</p>
-<p class="start-info">Press ENTER to start</p>`
-    document.querySelector('.modal').innerHTML = strHTML
-  } else if (action === 'victory') {
-    strHTML = `<h1 class="game-over-h1">VICTORY</h1>
-    <button onclick="init()" class="restart">Restart Game</button>`
-    document.querySelector('.modal').innerHTML = strHTML
-  } else if (action === 'lose') {
-    strHTML = `<h1 class="game-over-h1">GAMEOVER</h1>
-    <button onclick="init()" class="restart">Restart Game</button>`
-    document.querySelector('.modal').innerHTML = strHTML
+  var modalEl = document.querySelector('.modal')
+  if (action !== 'intro') {
+    var h1Condition = action === 'victory' ? 'VICTORY' : 'GAME OVER'
+    modalEl.innerHTML = `<h1 class="game-over-h1">${h1Condition}</h1>
+  <button onclick="init()" class="restart">Restart Game</button>`
   }
 }

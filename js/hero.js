@@ -28,12 +28,13 @@ function onKeyDown(ev) {
   } else if (ev.code === 'KeyN' && gSpecialLasers.laserBombCount === 1) {
     gSpecialLasers.laserBomb = true
     gSpecialLasers.laserBombCount--
+    playSound('shoot')
     updatesLaserCount()
     shoot()
   } else if (ev.code === 'KeyX' && gSpecialLasers.sonicLazerCount > 0) {
-    console.log('X')
     gSpecialLasers.sonicLazer = true
     gSpecialLasers.sonicLazerCount--
+    playSound('shoot')
     updatesLaserCount()
     shoot()
   }
