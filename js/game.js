@@ -149,3 +149,23 @@ function showModal(action) {
   <button onclick="init()" class="restart">Restart Game</button>`
   }
 }
+
+function handleArrows(dir) {
+  const arrowsImg = document.querySelector('.arrows')
+  let action = 'not-pressed'
+  if (dir === 'ArrowLeft') {
+    action = 'left-pressed'
+    arrowsImg.src = `imgs/${action}.png`
+    arrowsTimeOut()
+  } else if (dir === 'ArrowRight') {
+    action = 'right-pressed'
+    arrowsImg.src = `imgs/${action}.png`
+    arrowsTimeOut()
+  }
+}
+
+function arrowsTimeOut() {
+  setTimeout(() => {
+    document.querySelector('.arrows').src = `imgs/not-pressed.png`
+  }, 200)
+}

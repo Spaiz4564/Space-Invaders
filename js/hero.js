@@ -17,9 +17,11 @@ function onKeyDown(ev) {
   if (!gGame.isOn) return
 
   if (ev.code === 'ArrowLeft') {
+    handleArrows(ev.code)
     if (gHero.pos.j === 0) return
     moveHero(-1)
   } else if (ev.code === 'ArrowRight') {
+    handleArrows(ev.code)
     if (gHero.pos.j === 13) return
     moveHero(1)
   } else if (ev.code === 'Space' && !gHero.isShoot) {

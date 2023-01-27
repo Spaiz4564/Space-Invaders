@@ -9,8 +9,13 @@ body {
 }
 
 h2 {
-  font-family: fantasy;
+  bottom: 44rem;
+  position: absolute;
+  font-family: serif;
   letter-spacing: 1px;
+  color: white;
+  z-index: 999;
+  left: 42rem;
 }
 
 canvas {
@@ -18,7 +23,7 @@ canvas {
   position: relative;
   box-shadow: black 20px 10px 50px;
   width: 600px;
-  height: 600px;
+  height: 621px;
   background-image: url('../imgs/space.png');
   background-size: 400px;
 }
@@ -28,8 +33,9 @@ canvas {
 }
 
 .game-title {
+  margin-bottom: 20px;
   margin-top: 25px;
-  height: 150px;
+  height: 129px;
   width: 350px;
 }
 
@@ -42,14 +48,19 @@ h1 {
 }
 
 .board-container {
-  bottom: 3.5rem;
+  bottom: 6.7rem;
   position: absolute;
 }
 
 .bomb-count {
-  top: 11.2rem;
-  left: 43rem;
+  z-index: 999;
+  top: 10.3rem;
+  right: 41.7rem;
   position: absolute;
+}
+
+.bomb-count span {
+  color: white;
 }
 
 .hero,
@@ -66,4 +77,10 @@ h1 {
 .cell {
   width: 32px;
   height: 40px;
+}
+
+.arrows {
+  width: 180px;
+  height: 80px;
+  margin-top: 20px;
 }
