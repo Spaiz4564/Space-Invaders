@@ -8,12 +8,18 @@ var gAliensTopRowIdx
 var gAliensBottomRowIdx
 var gIsAlienFreeze
 var gIntervalsCount
+var gLatestInterval
 
 // Creates aliens
 function createAliens(board) {
+  var alienImg
+  var color
   for (let i = 0; i < ALIENS_ROW_COUNT; i++) {
+    if (i === 0) (color = 'orange'), (alienImg = ALIEN)
+    else if (i === 1) (color = 'green'), (alienImg = ALIEN2)
+    else if (i === 2) (color = 'blue'), (alienImg = ALIEN3)
     for (let j = 0; j < ALIENS_ROW_LENGTH; j++) {
-      board[i][j] = createCell(ALIEN, ALIEN, true, { i, j })
+      board[i][j] = createCell(alienImg, alienImg, true, { i, j }, color)
       // gGame.aliensCount++
     }
   }
@@ -43,9 +49,11 @@ function shiftBoardRight() {
   }
   for (var i = gAliensTopRowIdx; i <= gAliensBottomRowIdx; i++) {
     for (var j = gBoard[0].length - 1; j >= 0; j--) {
-      if (gBoard[i][j].type === ALIEN) {
-        updateCell({ i, j }, '')
-        updateCell({ i, j: j + 1 }, ALIEN, ALIEN, true)
+      if (gBoard[i][j].isAlien) {
+        var alien = gBoard[i][j]
+        var alienImg = checkAlienColor(alien)
+        updateCell({ i, j: j + 1 }, alienImg, alienImg, true, alien.alienColor)
+        updateCell({ i, j })
       }
     }
   }
@@ -60,9 +68,11 @@ function shiftBoardLeft() {
   }
   for (var i = gAliensTopRowIdx; i <= gAliensBottomRowIdx; i++) {
     for (var j = 0; j < gBoard[0].length; j++) {
-      if (gBoard[i][j].type === ALIEN) {
+      var alien = gBoard[i][j]
+      var alienImg = checkAlienColor(alien)
+      if (gBoard[i][j].isAlien) {
+        updateCell({ i, j: j - 1 }, alienImg, alienImg, true, alien.alienColor)
         updateCell({ i, j }, '')
-        updateCell({ i, j: j - 1 }, ALIEN, ALIEN, true)
       }
     }
   }
@@ -81,9 +91,11 @@ function shiftBoardDown() {
   }
   for (var i = gAliensBottomRowIdx; i >= gAliensTopRowIdx; i--) {
     for (var j = 0; j < gBoard[0].length; j++) {
-      if (gBoard[i][j].type === ALIEN) {
+      var alien = gBoard[i][j]
+      var alienImg = checkAlienColor(alien)
+      if (gBoard[i][j].isAlien) {
+        updateCell({ i: i + 1, j }, alienImg, alienImg, true, alien.alienColor)
         updateCell({ i, j }, '')
-        updateCell({ i: i + 1, j }, ALIEN, ALIEN, true)
       }
       if (i === gBoard.length - 3) handleGameOver(false)
     }
@@ -98,10 +110,16 @@ function shiftBoardDown() {
 // when the aliens are reaching the hero row - interval stops
 function moveAliens() {
   gIntervalAliensRight = setInterval(shiftBoardRight, ALIEN_SPEED, gBoard)
+  gSpaceShipInterval = setInterval(() => {
+    console.log('hello')
+    addSpaceShip(gBoard)
+  }, 10000)
 }
 
-function checkIfDead(gBoard) {
-  for (let i = 0; i < gBoard.length; i++) {
-    for (let j = 0; j < gBoard[i].length; j++) {}
-  }
+// Checking alien color
+function checkAlienColor(alien, alienImg) {
+  if (alien.alienColor === 'orange') alienImg = ALIEN
+  if (alien.alienColor === 'green') alienImg = ALIEN2
+  if (alien.alienColor === 'blue') alienImg = ALIEN3
+  return alienImg
 }

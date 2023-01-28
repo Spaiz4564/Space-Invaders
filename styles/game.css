@@ -23,7 +23,7 @@ canvas {
   position: relative;
   box-shadow: black 20px 10px 50px;
   width: 600px;
-  height: 630px;
+  height: 643px;
   background-image: url('../imgs/space.png');
   background-size: 400px;
 }
@@ -48,7 +48,7 @@ h1 {
 }
 
 .board-container {
-  bottom: 6.1rem;
+  bottom: 5.1rem;
   position: absolute;
 }
 
@@ -70,6 +70,11 @@ h1 {
   height: 26px;
 }
 
+.space-ship {
+  width: 33px;
+  height: 40px;
+}
+
 .laser {
   width: 25px;
   height: 35px;
@@ -80,45 +85,29 @@ h1 {
   height: 40px;
 }
 
-.arrows {
-  left: 55.2rem;
-  bottom: 3.7rem;
-  position: absolute;
-  width: 48px;
-  height: 28px;
-  margin-top: 20px;
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  85% {
+    transform: rotate(5deg);
+  }
+  95% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
-.gamepad {
-  width: 180px;
-  height: 80px;
-  margin-top: 20px;
+.wiggle {
+  display: inline-block;
+  animation: wiggle 2.5s infinite;
 }
 
-.circle {
-  width: 13.3px;
-  height: 13.3px;
-}
-
-.circle-red,
-.circle-yellow,
-.circle-blue,
-.circle-gray {
-  position: absolute;
-  width: 13.1px;
-  height: 13.1px;
-}
-
-.circle-red {
-  right: 902px;
-  bottom: 81.2px;
-}
-.circle-yellow {
-  bottom: 67.422px;
-  right: 918px;
-}
-
-.circle-blue {
-  right: 886px;
-  bottom: 67.422px;
+.wiggle:hover {
+  animation: none;
 }

@@ -76,7 +76,7 @@ function blinkLaser(pos) {
     return
   }
 
-  if (gBoard[nextCell][pos.j].type === ALIEN) {
+  if (gBoard[nextCell][pos.j].isAlien) {
     if (gSpecialLasers.laserBomb) {
       console.log('LAZER BOMB')
       bombNegs(gBoard, nextCell, pos.j)
@@ -86,6 +86,8 @@ function blinkLaser(pos) {
       handleAlienHit(pos, nextCell)
       updateCell({ i: nextCell, j: pos.j })
     }
+  } else if (gBoard[nextCell][pos.j].gameObject === SPACE_SHIP) {
+    updateScore(50)
   } else {
     updateCell({ i: nextCell, j: pos.j }, handleLaserColor())
   }
@@ -113,7 +115,7 @@ function bombNegs(board, rowIdx, colIdx) {
       if (i === rowIdx && j === colIdx) continue
 
       var currCell = board[i][j]
-      if (currCell.type === ALIEN) {
+      if (currCell.isAlien) {
         updateCell({ i, j })
         gGame.aliensCount--
         updateScore(10)

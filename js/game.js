@@ -2,13 +2,17 @@
 
 const BOARD_SIZE = 14
 const HERO = `<img class="hero" src="imgs/player.png"></img>`
-const ALIEN = `<img class="alien" src="imgs/enemy2.png"></img>`
+const ALIEN = `<img class="alien" src="imgs/enemy1.png"></img>`
+const ALIEN2 = `<img class="alien" src="imgs/enemy2.png"></img>`
+const ALIEN3 = `<img class="alien" src="imgs/enemy3.png"></img>`
 const LASER = `<img class="laser" src="imgs/laser.png"></img>`
+const SPACE_SHIP = `<img class="space-ship wiggle" src="imgs/spaceShip.png"></img>`
 const SONIC_LASER = `<img class="laser" src="imgs/sonicLazer.png"></img>`
 const LASER_BOMB = `<img class="laser" src="imgs/rocket.png"></img>`
 var ALIENS_ROW_LENGTH = 8
 const ALIENS_ROW_COUNT = 3
 var gBoard
+var gSpaceShipInterval
 var gGame = {
   isOn: false,
   aliensCount: 0,
@@ -25,7 +29,6 @@ function init() {
   moveAliens()
 }
 
-var gAliensInterval
 // Create and returns the board with aliens on top, ground at bottom
 // use the functions: createCell, createHero, createAliens
 function createBoard() {
@@ -58,11 +61,17 @@ function renderBoard(board, selector) {
 }
 
 // position such as: {i: 2, j: 7}
-function updateCell(pos, gameObject = null, type = '', isAlien = false) {
+function updateCell(
+  pos,
+  gameObject = null,
+  type = '',
+  isAlien = false,
+  alienColor
+) {
   gBoard[pos.i][pos.j].gameObject = gameObject
   gBoard[pos.i][pos.j].isAlien = isAlien
   gBoard[pos.i][pos.j].type = type
-
+  gBoard[pos.i][pos.j].alienColor = alienColor
   var elCell = getElCell(pos)
   elCell.innerHTML = gameObject || ''
 }
@@ -91,6 +100,7 @@ function resetGame() {
     sonicLazerCount: 3,
   }
   updatesLaserCount()
+  // clearInterval(gSpaceShipInterval)
   gAliensBottomRowIdx = ALIENS_ROW_COUNT - 1
 }
 
@@ -117,8 +127,8 @@ function checkVictory(board) {
     showModal('victory')
   }
 
-  // Game is buggy, this function makes sure winning isnt bugged, it runs through the board
-  // making sure there are no invaders, it only runs if the first check was not enough.
+  // Game is sometimes buggy, this function makes sure winning isnt bugged, it runs through the board
+  // making sure there are no invaders, tho it only runs if the first check was not enough.
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board.length; j++) {
@@ -139,6 +149,7 @@ function handleGameOver(results) {
   document.querySelector('.modal').style.height = '19rem'
   document.querySelector('table').style.display = 'none'
   freezeIntervals()
+  clearInterval(gSpaceShipInterval)
   showModal(results ? 'victory' : 'lose')
 }
 
@@ -152,6 +163,7 @@ function showModal(action) {
   }
 }
 
+// Handling arrow colors
 function handleArrows(dir) {
   const arrowsImg = document.querySelector('.arrows')
   let action = 'not-pressed'
@@ -166,12 +178,14 @@ function handleArrows(dir) {
   }
 }
 
+// Handling arrows timeout
 function arrowsTimeOut() {
   setTimeout(() => {
     document.querySelector('.arrows').src = `imgs/not-pressed.png`
   }, 200)
 }
 
+// Handling Game Pad
 function handleGamePad(key) {
   var blueCircle = document.querySelector('.circle-blue')
   var redCircle = document.querySelector('.circle-red')
@@ -193,9 +207,38 @@ function handleGamePad(key) {
   }
 }
 
+// Clearing game pad colors
 function clearGamePadButtons() {
   var gamePadButtons = document.querySelectorAll('.circle')
   for (let i = 0; i < gamePadButtons.length; i++) {
     gamePadButtons[i].src = 'imgs/gray.png'
   }
+}
+
+// Returns a new cell object. e.g.: {type: SKY, gameObject: ALIEN}
+function createCell(
+  gameObject = null,
+  type = null,
+  isAlien = false,
+  location = null,
+  alienColor
+) {
+  return {
+    type: type,
+    gameObject,
+    isAlien,
+    location,
+    alienColor,
+  }
+}
+
+// Adding space ship
+function addSpaceShip(board) {
+  var randomNum = Math.floor(Math.random() * board[0].length)
+  gBoard[0][randomNum] = createCell(SPACE_SHIP, SPACE_SHIP)
+  updateCell({ i: 0, j: randomNum }, SPACE_SHIP, SPACE_SHIP)
+
+  setTimeout(() => {
+    updateCell({ i: 0, j: randomNum })
+  }, 5000)
 }

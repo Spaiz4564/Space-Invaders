@@ -1,0 +1,42 @@
+.arrows {
+  left: 55.2rem;
+  bottom: 3rem;
+  position: absolute;
+  width: 48px;
+  height: 28px;
+  margin-top: 20px;
+}
+
+.gamepad {
+  width: 180px;
+  height: 80px;
+  margin-top: 20px;
+}
+
+.circle {
+  width: 13.3px;
+  height: 13.3px;
+}
+
+.circle-red,
+.circle-yellow,
+.circle-blue,
+.circle-gray {
+  position: absolute;
+  width: 13.1px;
+  height: 13.1px;
+}
+
+.circle-red {
+  right: 902px;
+  bottom: 68px;
+}
+.circle-yellow {
+  bottom: 53.422px;
+  right: 918px;
+}
+
+.circle-blue {
+  right: 886px;
+  bottom: 53.422px;
+}
