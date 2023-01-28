@@ -8,9 +8,23 @@
     <link rel="stylesheet" href="styles/game.css" />
     <link rel="stylesheet" href="styles/modal.css" />
     <link rel="stylesheet" href="styles/gamepad.css" />
+    <link rel="stylesheet" href="styles/fog.css" />
+
     <title>Space Invaders</title>
   </head>
   <body onload="showModal('intro')" onkeyup="onKeyDown(event)">
+    <div id="foglayer_01" class="fog">
+      <div class="image01"></div>
+      <div class="image02"></div>
+    </div>
+    <div id="foglayer_02" class="fog">
+      <div class="image01"></div>
+      <div class="image02"></div>
+    </div>
+    <div id="foglayer_03" class="fog">
+      <div class="image01"></div>
+      <div class="image02"></div>
+    </div>
     <img class="game-title" src="imgs/title.png" alt="" />
     <h2><span></span></h2>
     <div class="bomb-info">
