@@ -78,7 +78,8 @@ function resetGame() {
   document.querySelector('.modal').style.display = 'none'
   document.querySelector('.bomb-count').style.display = 'block'
   document.querySelector('canvas').style.opacity = '1'
-  document.querySelector('h2 span').innerText = 0
+  gGame.score = 0
+  document.querySelector('h2 span').innerText = gGame.score
   gIntervalsCount = 0
   gGame.aliensCount = 24
   gAliensTopRowIdx = 0
