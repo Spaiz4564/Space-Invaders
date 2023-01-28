@@ -26,11 +26,16 @@ function onKeyDown(ev) {
     moveHero(1)
   } else if (ev.code === 'Space' && !gHero.isShoot) {
     playSound('shoot')
+    handleGamePad(ev.code)
+    setTimeout(clearGamePadButtons, 300)
+
     shoot()
   } else if (ev.code === 'KeyN' && gSpecialLasers.laserBombCount === 1) {
     gSpecialLasers.laserBomb = true
     gSpecialLasers.laserBombCount--
     playSound('shoot')
+    handleGamePad(ev.code)
+    setTimeout(clearGamePadButtons, 300)
     updatesLaserCount()
     shoot()
   } else if (ev.code === 'KeyX' && gSpecialLasers.sonicLazerCount > 0) {
@@ -38,6 +43,8 @@ function onKeyDown(ev) {
     gSpecialLasers.sonicLazerCount--
     playSound('shoot')
     updatesLaserCount()
+    handleGamePad(ev.code)
+    setTimeout(clearGamePadButtons, 300)
     shoot()
   }
 }

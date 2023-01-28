@@ -76,6 +76,7 @@ function updateScore(diff) {
 // Resets game
 function resetGame() {
   document.querySelector('.modal').style.display = 'none'
+  document.querySelector('.bomb-count').style.display = 'block'
   document.querySelector('canvas').style.opacity = '1'
   document.querySelector('h2 span').innerText = 0
   gIntervalsCount = 0
@@ -135,7 +136,7 @@ function handleGameOver(results) {
   document.querySelector('.modal').style.display = 'block'
   document.querySelector('.modal').style.width = '19rem'
   document.querySelector('.modal').style.height = '19rem'
-  document.querySelector('table').style.position = 'absolute'
+  document.querySelector('table').style.display = 'none'
   freezeIntervals()
   showModal(results ? 'victory' : 'lose')
 }
@@ -168,4 +169,32 @@ function arrowsTimeOut() {
   setTimeout(() => {
     document.querySelector('.arrows').src = `imgs/not-pressed.png`
   }, 200)
+}
+
+function handleGamePad(key) {
+  var blueCircle = document.querySelector('.circle-blue')
+  var redCircle = document.querySelector('.circle-red')
+  var yellowCircle = document.querySelector('.circle-yellow')
+  let action
+  let src
+  if (key === 'KeyN') {
+    action = 'red'
+    src = `imgs/${action}.png`
+    blueCircle.src = src
+  } else if (key === 'KeyX') {
+    action = 'blue'
+    src = `imgs/${action}.png`
+    yellowCircle.src = src
+  } else if (key === 'Space') {
+    action = 'yellow'
+    src = `imgs/${action}.png`
+    redCircle.src = src
+  }
+}
+
+function clearGamePadButtons() {
+  var gamePadButtons = document.querySelectorAll('.circle')
+  for (let i = 0; i < gamePadButtons.length; i++) {
+    gamePadButtons[i].src = 'imgs/gray.png'
+  }
 }

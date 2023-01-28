@@ -23,7 +23,7 @@ canvas {
   position: relative;
   box-shadow: black 20px 10px 50px;
   width: 600px;
-  height: 621px;
+  height: 630px;
   background-image: url('../imgs/space.png');
   background-size: 400px;
 }
@@ -48,11 +48,12 @@ h1 {
 }
 
 .board-container {
-  bottom: 6.7rem;
+  bottom: 6.1rem;
   position: absolute;
 }
 
 .bomb-count {
+  display: none;
   z-index: 999;
   top: 10.3rem;
   right: 41.7rem;
@@ -80,7 +81,44 @@ h1 {
 }
 
 .arrows {
+  left: 55.2rem;
+  bottom: 3.7rem;
+  position: absolute;
+  width: 48px;
+  height: 28px;
+  margin-top: 20px;
+}
+
+.gamepad {
   width: 180px;
   height: 80px;
   margin-top: 20px;
+}
+
+.circle {
+  width: 13.3px;
+  height: 13.3px;
+}
+
+.circle-red,
+.circle-yellow,
+.circle-blue,
+.circle-gray {
+  position: absolute;
+  width: 13.1px;
+  height: 13.1px;
+}
+
+.circle-red {
+  right: 902px;
+  bottom: 81.2px;
+}
+.circle-yellow {
+  bottom: 67.422px;
+  right: 918px;
+}
+
+.circle-blue {
+  right: 886px;
+  bottom: 67.422px;
 }
