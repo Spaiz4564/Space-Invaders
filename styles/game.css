@@ -27,6 +27,10 @@ canvas {
   background-size: 400px;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .canvasAndTable {
   position: relative;
 }

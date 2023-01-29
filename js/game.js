@@ -101,9 +101,9 @@ function resetGame() {
     sonicLazerCount: 3,
   }
   document.querySelector('.modal').style.display = 'none'
-  // document.querySelector('.bomb-count').style.display = 'block'
-  document.querySelector('canvas').style.opacity = '1'
   document.querySelector('.restart').style.display = 'none'
+  document.querySelector('.bomb-count').style.display = 'hidden'
+  document.querySelector('canvas').style.opacity = '1'
   document.querySelector('.victory').style.display = 'none'
   document.querySelector('.victory').src = 'imgs/victory.png'
   document.querySelector('.victory').classList.remove('gameover')

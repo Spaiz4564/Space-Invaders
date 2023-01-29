@@ -41,8 +41,8 @@
   position: absolute;
   bottom: 35%;
   left: 39.2%;
-  display: none;
   z-index: 100;
+  display: none;
   transition: all 0.3s;
   font-size: 0.9rem;
   width: 8rem;

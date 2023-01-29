@@ -111,7 +111,6 @@ function shiftBoardDown() {
 function moveAliens() {
   gIntervalAliensRight = setInterval(shiftBoardRight, ALIEN_SPEED, gBoard)
   gSpaceShipInterval = setInterval(() => {
-    console.log('hello')
     addSpaceShip(gBoard)
   }, 10000)
 }
