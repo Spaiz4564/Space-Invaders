@@ -1,10 +1,14 @@
 .arrows {
-  left: 55.2rem;
-  bottom: 3rem;
+  right: 66%;
+  bottom: 31%;
   position: absolute;
   width: 48px;
   height: 28px;
   margin-top: 20px;
+}
+
+.game-pad {
+  position: relative;
 }
 
 .gamepad {
@@ -28,15 +32,15 @@
 }
 
 .circle-red {
-  right: 902px;
-  bottom: 68px;
+  right: 18%;
+  bottom: 50.3%;
 }
 .circle-yellow {
-  bottom: 53.422px;
-  right: 918px;
+  right: 26%;
+  bottom: 36.9%;
 }
 
 .circle-blue {
-  right: 886px;
-  bottom: 53.422px;
+  right: 9%;
+  bottom: 36.9%;
 }

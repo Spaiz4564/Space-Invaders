@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles/modal.css" />
     <link rel="stylesheet" href="styles/gamepad.css" />
     <link rel="stylesheet" href="styles/fog.css" />
+    <link rel="stylesheet" href="styles/media.css" />
 
     <title>Space Invaders</title>
   </head>
@@ -26,16 +27,34 @@
       <div class="image02"></div>
     </div>
     <img class="game-title" src="imgs/title.png" alt="" />
-    <h2><span></span></h2>
-    <div class="bomb-info">
-      <h3 class="bomb-count">
-        <img src="imgs/rocket.png" alt="" /><span class="rocket"></span>
-        <img class="blue-laser-img" src="imgs/blueLaser.png" alt="" /><span
-          class="blue-laser-span"
-        ></span>
-      </h3>
+
+    <div class="canvasAndTable">
+      <div class="bomb-info">
+        <h3 class="bomb-count">
+          <img src="imgs/rocket.png" alt="" /><span class="rocket"></span>
+          <img class="blue-laser-img" src="imgs/blueLaser.png" alt="" /><span
+            class="blue-laser-span"
+          ></span>
+        </h3>
+      </div>
+      <h2 class="score"><span>0</span></h2>
+      <canvas></canvas>
+      <div class="board-container"></div>
+      <div class="modal">
+        <p class="modal-title">SPACE INVADERS</p>
+        <p>
+          DESTROY ALL INVADERS<br />
+          BEFORE THEY REACH YOU
+        </p>
+        <p>&#x25BA;&nbsp; PRESS SPACE FOR LASER</p>
+        <p>&#x25BA;&nbsp; PRESS N FOR SUPER BOMB</p>
+        <p>&#x25BA; &nbsp;PRESS X FOR SONIC LASER</p>
+        <p class="start-info">Press ENTER to start</p>
+      </div>
+      <img class="victory" src="imgs/victory.png" alt="" />
+      <button onclick="init()" class="restart">Restart Game</button>
     </div>
-    <canvas></canvas>
+
     <div class="game-pad">
       <img class="gamepad" src="imgs/controller.png" alt="" />
       <img class="arrows" src="imgs/not-pressed.png" alt="" />
@@ -43,20 +62,7 @@
       <img class="circle circle-blue" src="imgs/gray.png" alt="" />
       <img class="circle circle-red" src="imgs/gray.png" alt="" />
     </div>
-    <img class="victory" src="imgs/victory.png" alt="" />
-    <button onclick="init()" class="restart">Restart Game</button>
-    <div class="modal">
-      <p class="modal-title">SPACE INVADERS</p>
-      <p>
-        DESTROY ALL INVADERS<br />
-        BEFORE THEY REACH YOU
-      </p>
-      <p>&#x25BA;&nbsp; PRESS SPACE FOR LASER</p>
-      <p>&#x25BA;&nbsp; PRESS N FOR SUPER BOMB</p>
-      <p>&#x25BA; &nbsp;PRESS X FOR SONIC LASER</p>
-      <p class="start-info">Press ENTER to start</p>
-    </div>
-    <div class="board-container"></div>
+
     <script src="js/util.js"></script>
     <script src="js/game.js"></script>
     <script src="js/hero.js"></script>
