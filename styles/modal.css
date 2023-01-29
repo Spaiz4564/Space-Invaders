@@ -30,8 +30,11 @@
 }
 
 .restart {
+  border: 1px solid #fbfbfb;
+  position: absolute;
+  bottom: 300px;
+  display: none;
   z-index: 100;
-  margin-top: 9rem;
   transition: all 0.3s;
   font-size: 0.9rem;
   width: 8rem;
@@ -40,7 +43,6 @@
   cursor: pointer;
   border-radius: 5px;
   padding: 10px;
-  margin-top: 7rem;
 }
 
 .restart:hover {

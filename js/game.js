@@ -13,6 +13,8 @@ var ALIENS_ROW_LENGTH = 8
 const ALIENS_ROW_COUNT = 3
 var gBoard
 var gSpaceShipInterval
+var gMusic
+var gSpaceShipTimeOut
 var gGame = {
   isOn: false,
   aliensCount: 0,
@@ -27,6 +29,7 @@ function init() {
   createAliens(gBoard)
   renderBoard(gBoard, '.board-container')
   moveAliens()
+  gMusic.play()
 }
 
 // Create and returns the board with aliens on top, ground at bottom
@@ -84,24 +87,28 @@ function updateScore(diff) {
 
 // Resets game
 function resetGame() {
-  document.querySelector('.modal').style.display = 'none'
-  document.querySelector('.bomb-count').style.display = 'block'
-  document.querySelector('canvas').style.opacity = '1'
   gGame.score = 0
-  document.querySelector('h2 span').innerText = gGame.score
+  gMusic = new Audio('sounds/music.wav')
   gIntervalsCount = 0
   gGame.aliensCount = 24
   gAliensTopRowIdx = 0
   gGame.isOn = true
+  gAliensBottomRowIdx = ALIENS_ROW_COUNT - 1
   gSpecialLasers = {
     laserBomb: false,
     laserBombCount: 1,
     sonicLazer: false,
     sonicLazerCount: 3,
   }
+  document.querySelector('.modal').style.display = 'none'
+  document.querySelector('.bomb-count').style.display = 'block'
+  document.querySelector('canvas').style.opacity = '1'
+  document.querySelector('.restart').style.display = 'none'
+  document.querySelector('.victory').style.display = 'none'
+  document.querySelector('.victory').src = 'imgs/victory.png'
+  document.querySelector('.victory').classList.remove('gameover')
+  document.querySelector('h2 span').innerText = gGame.score
   updatesLaserCount()
-  // clearInterval(gSpaceShipInterval)
-  gAliensBottomRowIdx = ALIENS_ROW_COUNT - 1
 }
 
 // Updates laser count
@@ -144,13 +151,22 @@ function checkVictory(board) {
 // Handle game over result
 function handleGameOver(results) {
   gGame.isOn = false
-  document.querySelector('.modal').style.display = 'block'
-  document.querySelector('.modal').style.width = '19rem'
-  document.querySelector('.modal').style.height = '19rem'
+  gMusic.pause()
+  gMusic.currentTime = 0
+  document.querySelector('.restart').style.display = 'block'
+  document.querySelector('.victory').style.display = 'block'
   document.querySelector('table').style.display = 'none'
   freezeIntervals()
   clearInterval(gSpaceShipInterval)
-  showModal(results ? 'victory' : 'lose')
+  clearTimeout(gSpaceShipTimeOut)
+  if (!results) {
+    var audio = new Audio('sounds/lose.mp3')
+    audio.play()
+    document.querySelector('.victory').classList.add('gameover')
+    document.querySelector('.victory').src = 'imgs/game-over.png'
+  } else {
+    playSound('win')
+  }
 }
 
 // Show modal
@@ -238,7 +254,7 @@ function addSpaceShip(board) {
   gBoard[0][randomNum] = createCell(SPACE_SHIP, SPACE_SHIP)
   updateCell({ i: 0, j: randomNum }, SPACE_SHIP, SPACE_SHIP)
 
-  setTimeout(() => {
+  gSpaceShipTimeOut = setTimeout(() => {
     updateCell({ i: 0, j: randomNum })
   }, 5000)
 }

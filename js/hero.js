@@ -87,6 +87,8 @@ function blinkLaser(pos) {
       updateCell({ i: nextCell, j: pos.j })
     }
   } else if (gBoard[nextCell][pos.j].gameObject === SPACE_SHIP) {
+    var audio = new Audio('sounds/bonus.mp3')
+    audio.play()
     updateScore(50)
   } else {
     updateCell({ i: nextCell, j: pos.j }, handleLaserColor())
