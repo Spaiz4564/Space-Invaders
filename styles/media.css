@@ -12,13 +12,16 @@
   .modal {
     line-height: 1.3rem;
     right: 18%;
-    bottom: 20%;
+    bottom: 25%;
     width: 15rem;
     height: 15rem;
   }
 
   .restart {
-    left: 36.3%;
+    width: 7rem;
+    padding: 8px;
+    font-size: 0.8rem;
+    left: 36.5%;
     bottom: 32%;
   }
 
@@ -47,7 +50,7 @@
   }
 
   .space-ship {
-    width: 19px;
+    width: 18px;
     height: 22px;
   }
 
@@ -64,13 +67,13 @@
   }
 
   .gameover {
-    left: 31% !important;
-    width: 184px !important;
-    height: 143px !important;
+    left: 32% !important;
+    width: 150px !important;
+    height: 110px !important;
   }
 
   .victory {
-    left: 20%;
+    left: 14%;
   }
 
   .gamepad {
@@ -85,5 +88,9 @@
 
   .bomb-count img {
     height: 27px;
+  }
+
+  .board-container {
+    right: 11%;
   }
 }
